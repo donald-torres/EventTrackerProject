@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.bingeworthy.entities.Program;
+import com.skilldistillery.bingeworthy.repositories.ProgramRepository;
 import com.skilldistillery.bingeworthy.services.ProgramService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,6 +24,9 @@ public class ProgramController {
 
 	@Autowired
 	private ProgramService programService;
+	
+	@Autowired
+	private ProgramRepository proRepo;
 
 	@GetMapping(path = { "programs", "programs/" })
 	public List<Program> index() {
@@ -91,8 +95,10 @@ public class ProgramController {
 
 	@DeleteMapping(path = { "programs/{id}" })
 	public void delete(@PathVariable("id") Integer id, HttpServletResponse res) {
+		Program deleted = proRepo.searchById(id);
 		try {
-			if (programService.delete(id)) {
+			if (deleted.isActive() == true) {
+				programService.delete(id);
 				res.setStatus(204);
 			} else {
 				res.setStatus(404);

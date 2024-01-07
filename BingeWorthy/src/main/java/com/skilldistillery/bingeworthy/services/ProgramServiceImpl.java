@@ -75,8 +75,9 @@ public class ProgramServiceImpl implements ProgramService {
 		boolean success = false;
 		Program deleted = proRepo.searchById(id);
 		if (deleted != null) {
-			proRepo.delete(deleted);
-			success = !proRepo.existsById(id);
+			deleted.setActive(false);
+		    proRepo.save(deleted);
+		    success = true;
 
 		}
 		return success;

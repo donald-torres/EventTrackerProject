@@ -17,4 +17,5 @@ public interface ProgramRepository extends JpaRepository<Program, Integer> {
 	List<Program> findProgramByPlatforms_Id(int id);
 
 	List<Program> findProgramByCategoryId(int id);
+	
 }
