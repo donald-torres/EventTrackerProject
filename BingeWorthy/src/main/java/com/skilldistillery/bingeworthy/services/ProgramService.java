@@ -10,9 +10,13 @@ public interface ProgramService {
 
 	Program getProgramById(int id);
 
+	List<Program> getProgramByCategoryId(int id);
+
+	List<Program> getProgramByPlatformId(int id);
+
 	Program create(Program program);
 
-	Program update(Program program);
+	Program update(Program program, int id);
 
 	boolean delete(int id);
 }

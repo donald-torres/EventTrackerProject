@@ -14,12 +14,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-class ProgramTest {
+class PlatformTest {
 
 	private static EntityManagerFactory emf;
 	private EntityManager em;
 
-	private Program program;
+	private Platform platform;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -34,31 +34,25 @@ class ProgramTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		program = em.find(Program.class, 1);
+		platform = em.find(Platform.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		program = null;
+		platform = null;
 	}
 
 	@Test
 	void test_initial_mapping() {
-		assertNotNull(program);
-		assertEquals("Supernatural", program.getName());
+		assertNotNull(platform);
+		assertEquals("Netflix", platform.getName());
 	}
 
 	@Test
 	void test_many_to_one_mapping() {
-		assertNotNull(program);
-		assertEquals("Action", program.getCategory().getType());
-	}
-
-	@Test
-	void test_many_to_many_mapping() {
-		assertNotNull(program);
-		assertTrue(program.getPlatforms().size() > 0);
+		assertNotNull(platform);
+		assertTrue(platform.getPrograms().size() > 0);
 	}
 
 }
