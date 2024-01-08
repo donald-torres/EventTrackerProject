@@ -4,6 +4,8 @@
 	
 	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+		<class>com.skilldistillery.bingeworthy.entities.Category</class>
+		<class>com.skilldistillery.bingeworthy.entities.Platform</class>
 		<class>com.skilldistillery.bingeworthy.entities.Program</class>
 
 		<properties>
