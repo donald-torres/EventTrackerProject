@@ -37,11 +37,11 @@ function init() {
 		} else {
 			newShow.stillAiring = false;
 		}
-		if(newProForm.name.value === "" || newProForm.stillAiring.value === ""){
+		if (newProForm.name.value === "" || newProForm.stillAiring.value === "") {
 			alert("You must have a title and state if new program is still airing")
-		}else {
-			
-		addNewProgram(newShow);
+		} else {
+
+			addNewProgram(newShow);
 		}
 	})
 }
@@ -206,6 +206,7 @@ function getProgramDetails(program) {
 	let btn = document.createElement('button')
 	btn.textContent = "Edit " + program.name;
 	btn.id = program.id;
+	btn.className = "btn btn-success"
 	oneProDiv.appendChild(btn);
 	btn.addEventListener('click', function(e) {
 		e.preventDefault();
@@ -215,14 +216,15 @@ function getProgramDetails(program) {
 	let btn2 = document.createElement('button')
 	btn2.textContent = "Delete " + program.name;
 	btn2.id = program.id;
+	btn2.className = "btn btn-danger"
 	oneProDiv.appendChild(btn2);
 	btn2.addEventListener('click', function(e) {
 		console.log("2" + program);
 		e.preventDefault()
-		if( confirm("Do want to delete " + program.name + "?")){
-		deleteProgram(program.id);
-		window.location.reload();;			
-		alert('Deleted Program with ID of ' + program.id)
+		if (confirm("Do want to delete " + program.name + "?")) {
+			deleteProgram(program.id);
+			window.location.reload();;
+			alert('Deleted Program with ID of ' + program.id)
 		}
 	})
 }
@@ -310,34 +312,37 @@ function editProgram(program) {
 
 	document.newProForm.edit.addEventListener('click', function(e) {
 		//e.preventDefault();
-		if(confirm("Do you want to edit " + program.name)){
-			
-		console.log('editing show ')
+		let yes = confirm("Do you want to edit " + program.name)
+
+		if (yes) {
+
+			console.log('editing show ')
 
 
 
-		let editShow = {
-			id: program.id,
-			name: newProForm.name.value,
-			imageUrl: newProForm.imageUrl.value,
-			description: newProForm.description.value,
-			episodeCount: newProForm.episodeCount.value,
-			length: newProForm.length.value,
-			totalRuntime: newProForm.totalRuntime.value,
-			stillAiring: newProForm.stillAiring.value.toUpperCase(),
-			//category: newProForm.categories.value,
-			//platforms: newProForm.platforms.value
+			let editShow = {
+				id: program.id,
+				name: newProForm.name.value,
+				imageUrl: newProForm.imageUrl.value,
+				description: newProForm.description.value,
+				episodeCount: newProForm.episodeCount.value,
+				length: newProForm.length.value,
+				totalRuntime: newProForm.totalRuntime.value,
+				stillAiring: newProForm.stillAiring.value.toUpperCase(),
+				//category: newProForm.categories.value,
+				//platforms: newProForm.platforms.value
+			}
+			if (editShow.stillAiring === "YES" || editShow.stillAiring === "Y") {
+				editShow.stillAiring = true;
+			} else {
+				editShow.stillAiring = false;
+			}
+			window.location.reload()
+			editOldProgram(editShow);
+			alert("Edit complete for " + program.name)
+			console.log('editing show complete ')
 		}
-		if (editShow.stillAiring === "YES" || editShow.stillAiring === "Y") {
-			editShow.stillAiring = true;
-		} else {
-			editShow.stillAiring = false;
-		}
-		window.location.reload()
-		editOldProgram(editShow);
-		}
-		alert("Edit complete for " + program.name)		
-		console.log('editing show complete ')
+
 	})
 
 }
