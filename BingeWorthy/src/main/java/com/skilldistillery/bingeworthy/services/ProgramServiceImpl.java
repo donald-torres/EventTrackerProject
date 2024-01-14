@@ -1,11 +1,13 @@
 package com.skilldistillery.bingeworthy.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.bingeworthy.entities.Category;
+import com.skilldistillery.bingeworthy.entities.Platform;
 import com.skilldistillery.bingeworthy.entities.Program;
 import com.skilldistillery.bingeworthy.repositories.ProgramRepository;
 
@@ -37,9 +39,11 @@ public class ProgramServiceImpl implements ProgramService {
 
 	@Override
 	public Program create(Program program) {
-		Category cat = new Category();
-		cat.setId(22);
-		program.setCategory(cat);
+		if (program.getCategory() == null) {
+			Category cat = new Category();
+			cat.setId(22);
+			program.setCategory(cat);
+		}
 		program.setActive(true);
 		proRepo.saveAndFlush(program);
 		return program;
@@ -65,6 +69,16 @@ public class ProgramServiceImpl implements ProgramService {
 		} else {
 			updated.setCategory(program.getCategory());
 		}
+		if (program.getPlatforms() == null) {
+			Platform plat = new Platform();
+			plat.setId(1);
+			List<Platform> plats = new ArrayList<>();
+			plats.add(plat);
+			updated.setPlatforms(plats);
+			
+		} else {
+			updated.setPlatforms(program.getPlatforms());
+		}
 
 		proRepo.save(updated);
 		return updated;
@@ -76,8 +90,8 @@ public class ProgramServiceImpl implements ProgramService {
 		Program deleted = proRepo.searchById(id);
 		if (deleted != null) {
 			deleted.setActive(false);
-		    proRepo.save(deleted);
-		    success = true;
+			proRepo.save(deleted);
+			success = true;
 
 		}
 		return success;
