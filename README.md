@@ -6,6 +6,9 @@
 A television show tracker for binge watchers to keep track of long running shows and the platforms streaming them for fellow "bingers" to easily find and start watching. 
 
 
+1/14/2024 - added FrontEnd to program using JS/AJAX with full CRUD on Programs
+using the clickable list of available programs. 
+
 ### Technologies / Techniques Used
 
 - MySQL
