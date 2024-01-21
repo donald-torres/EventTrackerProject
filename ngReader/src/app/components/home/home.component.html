@@ -1,0 +1,110 @@
+<h1>BINGE WORTHY</h1>
+
+
+<div *ngIf="!selected && !add">
+    <button class="btn btn-warning" (click)="add = 1">Add Program</button>
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Still Airing</th>
+                <th>Episode Length</th>
+                <th>Episode Count</th>
+                <th>Series runtime</th>
+                <th>Category</th>
+                <th>Streaming Platforms</th>
+                <th>Delete</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let program of programs">
+                <td (click)="displayProgram(program)"><img width="200px" src={{program.imageUrl}} alt="error"></td>
+                <td>{{program.name}}</td>
+                <td>{{program.description}}</td>
+                <td *ngIf="program.stillAiring">Yes</td>
+                <td *ngIf="!program.stillAiring">No</td>
+                <td>{{program.length}}</td>
+                <td>{{program.episodeCount}}</td>
+                <td>{{program.totalRuntime}}</td>
+                <td>{{program.category.type}} - {{program.category.description}}</td>
+                <td *ngIf="program.platforms.length == 0">None</td>
+                <td class="row row-cols-auto" *ngFor="let platform of program.platforms">{{platform.name}}</td>
+                <td><input type="button" class="btn btn-danger" value="X" (click)="deleteProgram(program.id)"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="card" style="width: 18rem;" *ngIf="selected && !editProgram">
+    <img width="200px" src={{selected.imageUrl}} class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">Title: {{selected?.name}}</h5>
+        <p class="card-text"><b>Description:</b> {{selected?.description}}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" *ngIf="selected?.stillAiring"><b>Still Airing?:</b> Yes</li>
+        <li class="list-group-item" *ngIf="!selected?.stillAiring"><b>Still Airing?:</b> No</li>
+        <li class="list-group-item"><b>Number of Episodes:</b> {{selected?.episodeCount}}</li>
+        <li class="list-group-item"><b>Episode Length:</b> {{selected?.length}} minutes</li>
+        <li class="list-group-item"><b>Series Runtime:</b> {{selected?.totalRuntime}} minutes</li>
+        <li class="list-group-item"><b>Category:</b> {{selected.category?.type}} - {{selected.category?.description}}</li>
+    </ul>
+    <div class="card-body">
+        <button class="btn btn-danger" (click)="selected = null">Go Back</button>
+        <button class="btn btn-success" (click)="setEditProgram()">Edit</button>
+    </div>
+</div>
+
+<div *ngIf="editProgram">
+    <form>
+        <label>Title: </label>
+        <input type="text" name="name" value={{selected?.name}} [(ngModel)]="editProgram.name" /><br />
+        <label>Description: </label>
+        <input type="text" name="description" value={{selected?.description}}
+            [(ngModel)]="editProgram.description" /><br />
+        <label>Image URL: </label>
+        <input type="text" name="imageUrl" value={{selected?.imageUrl}} [(ngModel)]="editProgram.imageUrl" /><br />
+        <label>Length of episodes: </label>
+        <input type="text" name="length" value={{selected?.length}} [(ngModel)]="editProgram.length" /><br />
+        <label>Number of episodes: </label>
+        <input type="text" name="episodeCount" value={{selected?.episodeCount}}
+            [(ngModel)]="editProgram.episodeCount" /><br />
+        <label>Total runtime of series: </label>
+        <input type="text" name="totalRuntime" value={{selected?.totalRuntime}}
+            [(ngModel)]="editProgram.totalRuntime" /><br />
+        <label>Is the series still Airing?: </label>
+        <input type="checkbox" name="stillAiring" value={{selected?.stillAiring}}
+            [(ngModel)]="editProgram.stillAiring" /><br />
+        <input class="btn btn-danger" type="submit" value="Cancel" (click)="editProgram = null" />
+        <input class="btn btn-success" type="submit" value="Submit" (click)="updateProgram(editProgram)" />
+    </form>
+</div>
+<div *ngIf="add">
+    <form>
+        <label>Title: </label>
+        <input type="text" name="name" [(ngModel)]="newProgram.name" /><br />
+        <label>Description: </label>
+        <input type="text" name="description"
+            [(ngModel)]="newProgram.description" /><br />
+        <label>Image URL: </label>
+        <input type="text" name="imageUrl"[(ngModel)]="newProgram.imageUrl" /><br />
+        <label>Length of episodes: </label>
+        <input type="text" name="length"[(ngModel)]="newProgram.length" /><br />
+        <label>Number of episodes: </label>
+        <input type="text" name="episodeCount"
+            [(ngModel)]="newProgram.episodeCount" /><br />
+        <label>Total runtime of series: </label>
+        <input type="text" name="totalRuntime"
+            [(ngModel)]="newProgram.totalRuntime" /><br />
+        <label>Is the series still Airing?: </label>
+        <input type="checkbox" name="stillAiring"
+            [(ngModel)]="newProgram.stillAiring" /><br />
+        <input class="btn btn-danger" type="submit" value="Cancel" (click)="add = null" />
+        <input class="btn btn-success" type="submit" value="Submit" (click)="addProgram(newProgram)" />
+    </form>
+</div>
