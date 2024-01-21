@@ -6,9 +6,6 @@
 A television show tracker for binge watchers to keep track of long running shows and the platforms streaming them for fellow "bingers" to easily find and start watching. 
 
 
-1/14/2024 - added FrontEnd to program using JS/AJAX with full CRUD on Programs
-using the clickable list of available programs. 
-
 ### Technologies / Techniques Used
 
 - MySQL
@@ -17,7 +14,6 @@ using the clickable list of available programs.
 - Spring REST
 - SpringToolSuite/SpringBoot
 - Postman
-
 
 
 ### REST Endpoints
@@ -49,3 +45,14 @@ using the clickable list of available programs.
 
    Cons -
  - I had a bit of trouble with the many to many relationship between the program and platform entities specifically pulling the mapping.  It allowed me to to get a deeper undersanding of the language for REST repository classes.  
+
+
+ ### JavaScript/AJAX Front End
+
+1/14/2024 - added Front End to program using JS/AJAX with full CRUD on Programs
+using the clickable list of available programs for updating. 
+
+
+### Angular Front End
+
+1/21/2024 - added another Front End to the program using Angular with full CRUD on Programs using clickable images on a table to view individual programs for editing.
