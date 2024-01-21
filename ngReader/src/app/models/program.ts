@@ -41,3 +41,5 @@ export class Program {
     }
 
 }
+export { Platform };
+

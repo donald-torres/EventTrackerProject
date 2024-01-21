@@ -9,44 +9,42 @@ import { Platform } from '../../models/platform';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit{
-
-  programs: Program[] = []
+export class HomeComponent implements OnInit {
+  programs: Program[] = [];
   selected: Program | null = null;
   newProgram: Program = new Program();
   editProgram: Program | null = null;
   add: any = null;
 
-  constructor(private programService: ProgramService, private platformService: PlatformService){}
+  constructor(
+    private programService: ProgramService,
+    private platformService: PlatformService
+  ) {}
 
   ngOnInit(): void {
     this.reload();
   }
 
-  loadPrograms(){
+  loadPrograms() {
     this.programService.index().subscribe({
       next: (proList) => {
-        this.programs = proList
+        this.programs = proList;
       },
       error: (problem) => {
         console.error('HomeComponent.loadPrograms(): error loading programs:');
-          console.error(problem);
+        console.error(problem);
       },
     });
   }
 
-  displayProgram(program: Program | null){
-    return this.selected = program;
-    
+  displayProgram(program: Program | null) {
+    return (this.selected = program);
   }
-  addProgram(newProgram : Program){
+  addProgram(newProgram: Program) {
     this.programService.create(newProgram).subscribe({
       next: (result) => {
         this.reload();
@@ -54,16 +52,18 @@ export class HomeComponent implements OnInit{
         this.newProgram = new Program();
       },
       error: (problem) => {
-        console.error('ProgramListComponent.addProgram(): error creating Program:');
-          console.error(problem);
+        console.error(
+          'ProgramListComponent.addProgram(): error creating Program:'
+        );
+        console.error(problem);
       },
     });
   }
-  
-  setEditProgram(){
+
+  setEditProgram() {
     this.editProgram = Object.assign({}, this.selected);
   }
-  updateProgram(editProgram : Program){
+  updateProgram(editProgram: Program) {
     this.programService.update(editProgram).subscribe({
       next: (result) => {
         this.reload();
@@ -71,36 +71,40 @@ export class HomeComponent implements OnInit{
         this.selected = result;
       },
       error: (problem) => {
-        console.error('ProgramListComponent.updateProgram(): error updateing Program:');
-          console.error(problem);
+        console.error(
+          'ProgramListComponent.updateProgram(): error updateing Program:'
+        );
+        console.error(problem);
       },
     });
   }
 
-  deleteProgram(id : number) {
-   this.programService.destroy(id).subscribe({
-    next: (result) => {
-      this.reload();
-      this.selected = null;
-    },
-    error: (problem) => {
-      console.error('ProgramListComponent.deleteProgram(): error deleteing Program:');
+  deleteProgram(id: number) {
+    this.programService.destroy(id).subscribe({
+      next: (result) => {
+        this.reload();
+        this.selected = null;
+      },
+      error: (problem) => {
+        console.error(
+          'ProgramListComponent.deleteProgram(): error deleteing Program:'
+        );
         console.error(problem);
-    },
-  });
+      },
+    });
   }
 
-  reload(){
-    this.programService.index().subscribe(
-      {
-        next: (data) => {
-          this.programs = data;
-        },
-        error: (problem) => {
-          console.error('ProgramListComponent.reload(): error reloading Programs:');
-          console.error(problem);
-        }
-      }
-    );
+  reload() {
+    this.programService.index().subscribe({
+      next: (data) => {
+        this.programs = data;
+      },
+      error: (problem) => {
+        console.error(
+          'ProgramListComponent.reload(): error reloading Programs:'
+        );
+        console.error(problem);
+      },
+    });
   }
 }

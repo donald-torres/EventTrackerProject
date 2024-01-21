@@ -1,8 +1,27 @@
-<h1>BINGE WORTHY</h1>
+<nav class="navbar navbar-expand-lg" style="background-color: rgb(255, 205, 145);">
+    <div class="container-fluid">
+        <img witdth="20" height="50"
+            src="https://img.freepik.com/free-vector/cute-happy-television-cartoon-vector-icon-illustration-technology-object-icon-concept-isolated-flat_138676-6868.jpg?w=1060&t=st=1705806016~exp=1705806616~hmac=9d42c1ec23babe16b00b3456266df6c5fe5b9764d3342c0ab5533324b51f57f1">
+        <h1 class="navbar-brand">BINGE WORTHY</h1>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" (click)="selected = null" (click)="add = null"
+                        (click)="editProgram = null">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" (click)="add = 1">Add Program</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-
-<div *ngIf="!selected && !add">
-    <button class="btn btn-warning" (click)="add = 1">Add Program</button>
+<div *ngIf="!selected && !add" class="table-responsive" style="overflow: auto ">
     <table class="table table-striped table-hover">
         <thead class="table-dark">
             <tr>
@@ -24,7 +43,7 @@
             <tr *ngFor="let program of programs">
                 <td (click)="displayProgram(program)"><img width="200px" src={{program.imageUrl}} alt="error"></td>
                 <td>{{program.name}}</td>
-                <td>{{program.description}}</td>
+                <td [width]="100">{{program.description}}</td>
                 <td *ngIf="program.stillAiring">Yes</td>
                 <td *ngIf="!program.stillAiring">No</td>
                 <td>{{program.length}}</td>
@@ -52,7 +71,8 @@
         <li class="list-group-item"><b>Number of Episodes:</b> {{selected?.episodeCount}}</li>
         <li class="list-group-item"><b>Episode Length:</b> {{selected?.length}} minutes</li>
         <li class="list-group-item"><b>Series Runtime:</b> {{selected?.totalRuntime}} minutes</li>
-        <li class="list-group-item"><b>Category:</b> {{selected.category?.type}} - {{selected.category?.description}}</li>
+        <li class="list-group-item"><b>Category:</b> {{selected.category?.type}} - {{selected.category?.description}}
+        </li>
     </ul>
     <div class="card-body">
         <button class="btn btn-danger" (click)="selected = null">Go Back</button>
@@ -64,11 +84,11 @@
     <form>
         <label>Title: </label>
         <input type="text" name="name" value={{selected?.name}} [(ngModel)]="editProgram.name" /><br />
+        <label>Image URL: </label>
+        <input type="text" name="imageUrl" value={{selected?.imageUrl}} [(ngModel)]="editProgram.imageUrl" /><br />
         <label>Description: </label>
         <input type="text" name="description" value={{selected?.description}}
             [(ngModel)]="editProgram.description" /><br />
-        <label>Image URL: </label>
-        <input type="text" name="imageUrl" value={{selected?.imageUrl}} [(ngModel)]="editProgram.imageUrl" /><br />
         <label>Length of episodes: </label>
         <input type="text" name="length" value={{selected?.length}} [(ngModel)]="editProgram.length" /><br />
         <label>Number of episodes: </label>
@@ -88,22 +108,18 @@
     <form>
         <label>Title: </label>
         <input type="text" name="name" [(ngModel)]="newProgram.name" /><br />
-        <label>Description: </label>
-        <input type="text" name="description"
-            [(ngModel)]="newProgram.description" /><br />
         <label>Image URL: </label>
-        <input type="text" name="imageUrl"[(ngModel)]="newProgram.imageUrl" /><br />
+        <input type="text" name="imageUrl" [(ngModel)]="newProgram.imageUrl" /><br />
+        <label>Description: </label>
+        <input type="text" name="description" [(ngModel)]="newProgram.description" /><br />
         <label>Length of episodes: </label>
-        <input type="text" name="length"[(ngModel)]="newProgram.length" /><br />
+        <input type="text" name="length" [(ngModel)]="newProgram.length" /><br />
         <label>Number of episodes: </label>
-        <input type="text" name="episodeCount"
-            [(ngModel)]="newProgram.episodeCount" /><br />
+        <input type="text" name="episodeCount" [(ngModel)]="newProgram.episodeCount" /><br />
         <label>Total runtime of series: </label>
-        <input type="text" name="totalRuntime"
-            [(ngModel)]="newProgram.totalRuntime" /><br />
+        <input type="text" name="totalRuntime" [(ngModel)]="newProgram.totalRuntime" /><br />
         <label>Is the series still Airing?: </label>
-        <input type="checkbox" name="stillAiring"
-            [(ngModel)]="newProgram.stillAiring" /><br />
+        <input type="checkbox" name="stillAiring" [(ngModel)]="newProgram.stillAiring" /><br />
         <input class="btn btn-danger" type="submit" value="Cancel" (click)="add = null" />
         <input class="btn btn-success" type="submit" value="Submit" (click)="addProgram(newProgram)" />
     </form>
